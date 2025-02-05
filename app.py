@@ -1,9 +1,14 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-@app.route("/")
+@app.route("/", methods=["POST", "GET"])
 def homePage():
+    if request.method == "POST":
+        firstName = request.form["fname"]
+        lastName = request.form["lname"]
+        return render_template("testing.html", fname=firstName, lname=lastName)
+    
     return render_template("homePage.html")
 
 @app.route("/test")
