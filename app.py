@@ -1,10 +1,14 @@
-from flask import Flask
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 @app.route("/")
-def test():
-    return "testing"
+def homePage():
+    return render_template("homePage.html")
+
+@app.route("/test")
+def testing():
+    return render_template("createGitHubIssues.html")
 
 
 
