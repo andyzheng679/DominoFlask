@@ -9,6 +9,18 @@
     <p>change this page name and all of that</p>
     <a href="{{url_for('homePage')}}">Go back to Home Page</a>
 
-    
+    <form method="POST">
+        <label for="ISSUETITLE">GitHub Issue Title:</label><br>
+        <input type="text" name="ISSUETITLE">
+        <br>
+        <label for="ISSUEDESC">GitHub Issue Description:</label><br>
+        <textarea name="ISSUEDESC" rows="3" cols="40"></textarea>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    {%if message%}
+    <p>{{message}}</p>
+    {%endif%}
 </body>
 </html>

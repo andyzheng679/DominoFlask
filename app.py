@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session, redirect
 from importedFunctions.createGitIssue import creatingGithubIssue
+import os
 
 app = Flask(__name__)
+app.secret_key = os.urandom(10)
 
 @app.route("/", methods=["POST", "GET"])
 def homePage():
@@ -21,11 +23,29 @@ def homePage():
     
     return render_template("homePage.html", message=requestMessage)
 
-@app.route("/test")
+
+@app.route("/test", methods=["POST", "GET"])
 def testing():
+    if "clientId" not in session and "clientSecret" not in session:
+        return redirect("/githubInfo")
+
     return render_template("createGitHubIssues.html")
 
 
+@app.route("/githubInfo", methods=["POST", "GET"])
+def githubInfoPage():
+
+    if request.method == "POST":
+        session["clientId"] = request.form["CLIENTID"]
+        session["clientSecret"] = request.form["CLIENTSECRET"]
+        return redirect("/delete")
+
+    return render_template("githubInfo.html")
+
+
+@app.route("/delete")
+def delete():
+    return render_template("delete.html", oauthid=session["clientId"], oauthsecrets=session["clientSecret"])
 
 
 
