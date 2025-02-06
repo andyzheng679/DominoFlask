@@ -1,9 +1,12 @@
 from flask import Flask, render_template, request
+from importedFunctions.createGitIssue import creatingGithubIssue
 
 app = Flask(__name__)
 
 @app.route("/", methods=["POST", "GET"])
 def homePage():
+    requestMessage = None
+
     if request.method == "POST":
         pat = request.form["PAT"]
         orgName = request.form["ORGNAME"]
@@ -11,9 +14,12 @@ def homePage():
         issueTitle = request.form["ISSUETITLE"]
         issueDesc = request.form["ISSUEDESC"]
 
-        return render_template("testing.html")
+        if pat and orgName and repoName and issueTitle and issueDesc:
+            requestMessage = creatingGithubIssue(pat, orgName, repoName, issueTitle, issueDesc)
+        else:
+            requestMessage = "Make sure to fill out the form"
     
-    return render_template("homePage.html")
+    return render_template("homePage.html", message=requestMessage)
 
 @app.route("/test")
 def testing():

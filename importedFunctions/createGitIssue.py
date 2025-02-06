@@ -19,6 +19,6 @@ def creatingGithubIssue(pat,orgName, repoName, issueTitle, issueDesc):
     postResponse = requests.post(realEndpoint, json=payload, headers=headers)
 
     if postResponse.status_code == 201:
-        print("Issue created")
+        return "Github Issue Created"
     else:
-        print("error", postResponse.text())
+        return f"Error: {postResponse.text}"
