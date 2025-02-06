@@ -6,17 +6,26 @@
     <title>Home Page or something</title>
 </head>
 <body>
-    <a href="{{url_for('testing')}}">Testing to see....</a>
+    <a href="{{url_for('testing')}}">Testing to see....see this?</a>
 
     <form method="POST">
-        <label for="fname">First name:</label><br>
-        <input type="text" id="fname" name="fname">
+        <label for="PAT">Personal Access Token:</label><br>
+        <input type="password" name="PAT">
         <br>
-        <label for="lname">Last name:</label><br>
-        <input type="text" id="lname" name="lname">
+        <label for="ORGNAME">Organization/UserName:</label><br>
+        <input type="text" name="ORGNAME">
+        <br>
+        <label for="REPONAME">Repository Name:</label><br>
+        <input type="text" name="REPONAME">
+        <br>
+        <label for="ISSUETITLE">GitHub Issue Title:</label><br>
+        <input type="text" name="ISSUETITLE">
+        <br>
+        <label for="ISSUEDESC">GitHub Issue Description:</label><br>
+        <textarea name="ISSUEDESC" rows="3" cols="40"></textarea>
         <br>
         <button type="submit">Submit</button>
     </form>
-    
+    <!--use id for js and styling-->
 </body>
 </html>
