@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, session, redirect
 from importedFunctions.createGitIssue import creatingGithubIssue
 import os
+from importedFunctions.githubAuth import githubAuth
 
 app = Flask(__name__)
 app.secret_key = os.urandom(10)
@@ -38,15 +39,27 @@ def githubInfoPage():
     if request.method == "POST":
         session["clientId"] = request.form["CLIENTID"]
         session["clientSecret"] = request.form["CLIENTSECRET"]
-        return redirect("/delete")
+        return githubAuth()
+
+        #return redirect("/delete")
 
     return render_template("githubInfo.html")
 
 
+@app.route("/callback", methods=["POST", "GET"])
+def callback():
+    return render_template("callback.html")
+
+
+
 @app.route("/delete")
 def delete():
-    return render_template("delete.html", oauthid=session["clientId"], oauthsecrets=session["clientSecret"])
+    gitId = session.get("clientId")
+    gitSecrets = session.get("clientSecret")
+    #request.host_url + "callback"
+    #session.get("clientSecret")
 
+    return render_template("delete.html", oauthid=gitId, oauthsecrets=gitSecrets)
 
 
 
