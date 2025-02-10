@@ -26,8 +26,8 @@ def homePage():
     return render_template("homePage.html", message=requestMessage)
 
 
-@app.route("/test", methods=["POST", "GET"])
-def testing():
+@app.route("/gitHubIssues", methods=["POST", "GET"])
+def gitHubIssues():
     if "clientId" not in session and "clientSecret" not in session:
         return redirect("/githubInfo")
 

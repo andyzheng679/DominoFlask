@@ -1,4 +1,4 @@
-from flask import session, request
+from flask import session, request, redirect, url_for
 import requests
 
 accessCodeEndpoint = "https://github.com/login/oauth/access_token"
@@ -19,6 +19,8 @@ def getAccessCode(authCode):
     accessRespose = requests.post(accessCodeEndpoint, headers=headers, data=payload)
 
     if accessRespose.status_code == 200:
-        return accessRespose.json()
+        session["accessCode"] = accessRespose.json().get("access_token")
+        return redirect(url_for("gitHubIssues"))
+        #return accessRespose.json().get()
     else:
         return f"Error: {accessRespose.text}", 400
