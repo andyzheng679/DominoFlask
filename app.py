@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, session, redirect
-from importedFunctions.createGitIssue import creatingGithubIssue
+from importedFunctions.createGitIssue import creatingGithubIssue, creatingGithubIssue2
 import os
 from importedFunctions.githubAuth import githubAuth
 from importedFunctions.getAccessCode import getAccessCode
@@ -28,10 +28,22 @@ def homePage():
 
 @app.route("/gitHubIssues", methods=["POST", "GET"])
 def gitHubIssues():
+    requestMessage = None
     if "clientId" not in session and "clientSecret" not in session:
         return redirect("/githubInfo")
+    
+    if request.method == "POST":
+        orgName = request.form["ORGNAME"]
+        repoName = request.form["REPONAME"]
+        issueTitle = request.form["ISSUETITLE"]
+        issueDesc = request.form["ISSUEDESC"]
 
-    return render_template("createGitHubIssues.html")
+        if orgName and repoName and issueTitle and issueDesc:
+            requestMessage = creatingGithubIssue2(orgName, repoName, issueTitle, issueDesc)
+        else:
+            requestMessage = "Make sure to fill out the form"
+        
+    return render_template("createGitHubIssues.html", message=requestMessage) 
 
 
 @app.route("/githubInfo", methods=["POST", "GET"])
