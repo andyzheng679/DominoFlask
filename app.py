@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, session, redirect
 from importedFunctions.createGitIssue import creatingGithubIssue
 import os
 from importedFunctions.githubAuth import githubAuth
+from importedFunctions.getAccessCode import getAccessCode
 
 app = Flask(__name__)
 app.secret_key = os.urandom(10)
@@ -48,7 +49,14 @@ def githubInfoPage():
 
 @app.route("/callback", methods=["POST", "GET"])
 def callback():
-    return render_template("callback.html")
+    authCode = request.args.get("code")
+
+    if not authCode:
+        return "Testing, this will not work", 400
+    
+    return getAccessCode(authCode)
+
+    #return render_template("callback.html", message=authCode)
 
 
 
