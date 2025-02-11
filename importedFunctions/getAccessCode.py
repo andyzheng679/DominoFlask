@@ -21,6 +21,5 @@ def getAccessCode(authCode):
     if accessRespose.status_code == 200:
         session["accessCode"] = accessRespose.json().get("access_token")
         return redirect(url_for("gitHubIssues"))
-        #return accessRespose.json().get()
     else:
         return f"Error: {accessRespose.text}", 400
